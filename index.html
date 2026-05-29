@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>摄影作品集 | Portfolio</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #111113;
+        --muted: #68686f;
+        --line: #e7e7ea;
+        --soft: #f6f6f7;
+        --white: #ffffff;
+        --accent: #0071e3;
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--white);
+        color: var(--ink);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+          "Microsoft YaHei", sans-serif;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        z-index: 20;
+        width: 100%;
+        border-bottom: 1px solid rgba(231, 231, 234, 0.78);
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(18px);
+      }
+
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: min(1180px, calc(100% - 40px));
+        height: 54px;
+        margin: 0 auto;
+      }
+
+      .brand {
+        font-size: 15px;
+        font-weight: 650;
+        letter-spacing: 0;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        color: #303033;
+        font-size: 13px;
+      }
+
+      .hero {
+        min-height: 96vh;
+        padding: 92px 20px 40px;
+        display: grid;
+        place-items: center;
+      }
+
+      .hero-shell {
+        width: min(1180px, 100%);
+      }
+
+      .hero-copy {
+        max-width: 780px;
+        margin: 0 auto 34px;
+        text-align: center;
+      }
+
+      .eyebrow {
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      h1 {
+        margin: 13px 0 16px;
+        font-size: clamp(46px, 8vw, 92px);
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 690px;
+        margin: 0 auto;
+        color: #55555c;
+        font-size: clamp(18px, 2.2vw, 24px);
+        line-height: 1.45;
+      }
+
+      .hero-image {
+        overflow: hidden;
+        width: min(1040px, 100%);
+        margin: 0 auto;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        aspect-ratio: 16 / 9;
+        background: var(--soft);
+      }
+
+      .hero-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      section {
+        padding: 92px 20px;
+      }
+
+      .section-inner {
+        width: min(1180px, 100%);
+        margin: 0 auto;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 30px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(34px, 5vw, 58px);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .section-note {
+        max-width: 390px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.55;
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 26px;
+      }
+
+      .filter-button {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--white);
+        color: #2d2d31;
+        cursor: pointer;
+        font: inherit;
+        font-size: 14px;
+        min-height: 36px;
+        padding: 0 16px;
+      }
+
+      .filter-button.is-active {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: var(--white);
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 16px;
+      }
+
+      .photo-card {
+        position: relative;
+        overflow: hidden;
+        grid-column: span 4;
+        border: 0;
+        border-radius: 8px;
+        background: var(--soft);
+        aspect-ratio: 4 / 5;
+        cursor: pointer;
+        font: inherit;
+        padding: 0;
+        text-align: left;
+      }
+
+      .photo-card.wide {
+        grid-column: span 8;
+        aspect-ratio: 16 / 9;
+      }
+
+      .photo-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 600ms ease;
+      }
+
+      .photo-card:hover img,
+      .photo-card:focus-visible img {
+        transform: scale(1.035);
+      }
+
+      .photo-meta {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 48px 18px 18px;
+        color: var(--white);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.58), transparent);
+        opacity: 0;
+        transition: opacity 260ms ease;
+      }
+
+      .photo-card:hover .photo-meta,
+      .photo-card:focus-visible .photo-meta {
+        opacity: 1;
+      }
+
+      .photo-title {
+        font-weight: 650;
+      }
+
+      .photo-place {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 13px;
+      }
+
+      .story {
+        background: var(--soft);
+      }
+
+      .series {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 44px;
+        align-items: center;
+      }
+
+      .series-image {
+        overflow: hidden;
+        border-radius: 8px;
+        aspect-ratio: 4 / 3;
+        box-shadow: var(--shadow);
+      }
+
+      .series-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .series-copy p,
+      .about p {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 28px;
+      }
+
+      .stat {
+        border-top: 1px solid #d9d9dd;
+        padding-top: 14px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 28px;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .about-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 46px;
+        align-items: start;
+      }
+
+      .portrait {
+        overflow: hidden;
+        border-radius: 8px;
+        aspect-ratio: 1 / 1.15;
+        background: var(--soft);
+      }
+
+      .portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .contact {
+        text-align: center;
+        border-top: 1px solid var(--line);
+      }
+
+      .contact p {
+        max-width: 620px;
+        margin: 18px auto 28px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--white);
+        font-weight: 650;
+        padding: 0 22px;
+      }
+
+      footer {
+        padding: 28px 20px 42px;
+        color: var(--muted);
+        font-size: 13px;
+        text-align: center;
+      }
+
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        display: none;
+        place-items: center;
+        padding: 24px;
+        background: rgba(250, 250, 252, 0.92);
+        backdrop-filter: blur(18px);
+      }
+
+      .lightbox.is-open {
+        display: grid;
+      }
+
+      .lightbox figure {
+        width: min(1080px, 100%);
+        margin: 0;
+      }
+
+      .lightbox img {
+        width: 100%;
+        max-height: 78vh;
+        border-radius: 8px;
+        object-fit: contain;
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+
+      .lightbox figcaption {
+        margin-top: 14px;
+        color: #2d2d31;
+        text-align: center;
+      }
+
+      .close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: var(--white);
+        color: var(--ink);
+        cursor: pointer;
+        font-size: 24px;
+        line-height: 1;
+      }
+
+      @media (max-width: 820px) {
+        .nav-links {
+          gap: 14px;
+        }
+
+        .hero {
+          min-height: auto;
+          padding-top: 96px;
+        }
+
+        .section-heading,
+        .series,
+        .about-grid {
+          display: block;
+        }
+
+        .section-note {
+          margin-top: 14px;
+        }
+
+        .series-copy,
+        .about {
+          margin-top: 28px;
+        }
+
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+
+        .photo-card,
+        .photo-card.wide {
+          grid-column: auto;
+          aspect-ratio: 4 / 5;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .nav-inner {
+          width: min(100% - 28px, 1180px);
+        }
+
+        .nav-links a:nth-child(2) {
+          display: none;
+        }
+
+        section {
+          padding: 70px 16px;
+        }
+
+        .hero {
+          padding-inline: 16px;
+        }
+
+        .stat-row {
+          grid-template-columns: 1fr;
+        }
+
+        .photo-meta {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="主导航">
+      <div class="nav-inner">
+        <a class="brand" href="#">Your Name</a>
+        <div class="nav-links">
+          <a href="#gallery">作品</a>
+          <a href="#series">系列</a>
+          <a href="#about">关于</a>
+          <a href="#contact">联系</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-shell">
+        <div class="hero-copy">
+          <div class="eyebrow">Photography Portfolio</div>
+          <h1>看见安静的光。</h1>
+          <p class="lead">
+            一个以白色为主调的个人摄影作品集，用克制的版面、宽松的留白和大图展示，让照片自己说话。
+          </p>
+        </div>
+        <div class="hero-image">
+          <img
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1800&q=90"
+            alt="山谷湖面与柔和自然光"
+          />
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="gallery">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2>精选作品</h2>
+            <p class="section-note">
+              用类别筛选作品，点击任意照片可以进入更沉浸的查看模式。
+            </p>
+          </div>
+
+          <div class="filters" aria-label="作品分类">
+            <button class="filter-button is-active" data-filter="all">全部</button>
+            <button class="filter-button" data-filter="landscape">风景</button>
+            <button class="filter-button" data-filter="city">城市</button>
+            <button class="filter-button" data-filter="portrait">人像</button>
+          </div>
+
+          <div class="gallery">
+            <button class="photo-card wide" data-category="landscape" data-title="Morning Valley" aria-label="查看 Morning Valley">
+              <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=88" alt="晨光里的湖边小屋" />
+              <span class="photo-meta"><span><span class="photo-title">Morning Valley</span><br /><span class="photo-place">Yunnan, 2026</span></span></span>
+            </button>
+            <button class="photo-card" data-category="city" data-title="Glass Hour" aria-label="查看 Glass Hour">
+              <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=88" alt="白色建筑与清晰天光" />
+              <span class="photo-meta"><span><span class="photo-title">Glass Hour</span><br /><span class="photo-place">Shanghai, 2026</span></span></span>
+            </button>
+            <button class="photo-card" data-category="portrait" data-title="Quiet Frame" aria-label="查看 Quiet Frame">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=88" alt="自然光下的人像" />
+              <span class="photo-meta"><span><span class="photo-title">Quiet Frame</span><br /><span class="photo-place">Studio, 2025</span></span></span>
+            </button>
+            <button class="photo-card" data-category="landscape" data-title="Blue Ridge" aria-label="查看 Blue Ridge">
+              <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=88" alt="远山与公路" />
+              <span class="photo-meta"><span><span class="photo-title">Blue Ridge</span><br /><span class="photo-place">Qinghai, 2025</span></span></span>
+            </button>
+            <button class="photo-card wide" data-category="city" data-title="White Corner" aria-label="查看 White Corner">
+              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=88" alt="城市建筑立面" />
+              <span class="photo-meta"><span><span class="photo-title">White Corner</span><br /><span class="photo-place">Tokyo, 2025</span></span></span>
+            </button>
+            <button class="photo-card" data-category="portrait" data-title="Soft Noon" aria-label="查看 Soft Noon">
+              <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&q=88" alt="柔和日光下的人像" />
+              <span class="photo-meta"><span><span class="photo-title">Soft Noon</span><br /><span class="photo-place">Hangzhou, 2024</span></span></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="story" id="series">
+        <div class="section-inner series">
+          <div class="series-image">
+            <img
+              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1400&q=88"
+              alt="星空与雪山"
+            />
+          </div>
+          <div class="series-copy">
+            <div class="eyebrow">Featured Series</div>
+            <h2>慢下来，才看得见。</h2>
+            <p>
+              这个系列关注旅途中很轻的瞬间：风掠过水面、建筑边缘的一束光、人物回头前的一秒。页面以干净的白色空间承接照片，让浏览节奏更接近翻阅一本摄影集。
+            </p>
+            <div class="stat-row">
+              <div class="stat"><strong>36</strong><span>张精选作品</span></div>
+              <div class="stat"><strong>8</strong><span>个拍摄城市</span></div>
+              <div class="stat"><strong>4</strong><span>个主题系列</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="section-inner about-grid">
+          <div class="portrait">
+            <img
+              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=88"
+              alt="摄影师肖像占位图"
+            />
+          </div>
+          <div class="about">
+            <div class="eyebrow">About</div>
+            <h2>你好，我是 Your Name。</h2>
+            <p>
+              我喜欢用摄影记录清爽、安静、有呼吸感的画面。你可以在这里放自己的创作理念、常用器材、拍摄方向，或者写一段更个人化的介绍。
+            </p>
+            <p>
+              这个页面已经预留了作品筛选、图片查看、系列介绍和联系入口。把图片链接替换成你的照片，再改一下文字，就能成为你的个人摄影主页。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div class="section-inner">
+          <div class="eyebrow">Contact</div>
+          <h2>一起拍点什么。</h2>
+          <p>
+            商业拍摄、个人约拍、展览合作或作品交流，都可以从这里开始。
+          </p>
+          <a class="cta" href="mailto:hello@example.com">hello@example.com</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 Your Name. All photography rights reserved.</footer>
+
+    <div class="lightbox" aria-hidden="true">
+      <button class="close" type="button" aria-label="关闭图片预览">×</button>
+      <figure>
+        <img alt="" />
+        <figcaption></figcaption>
+      </figure>
+    </div>
+
+    <script>
+      const filterButtons = document.querySelectorAll(".filter-button");
+      const photoCards = document.querySelectorAll(".photo-card");
+      const lightbox = document.querySelector(".lightbox");
+      const lightboxImage = lightbox.querySelector("img");
+      const lightboxCaption = lightbox.querySelector("figcaption");
+      const closeButton = document.querySelector(".close");
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const filter = button.dataset.filter;
+
+          filterButtons.forEach((item) => item.classList.remove("is-active"));
+          button.classList.add("is-active");
+
+          photoCards.forEach((card) => {
+            const visible = filter === "all" || card.dataset.category === filter;
+            card.style.display = visible ? "" : "none";
+          });
+        });
+      });
+
+      photoCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          const image = card.querySelector("img");
+          lightboxImage.src = image.src.replace(/w=\d+/, "w=1800");
+          lightboxImage.alt = image.alt;
+          lightboxCaption.textContent = card.dataset.title;
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.removeAttribute("src");
+      }
+
+      closeButton.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeLightbox();
+      });
+    </script>
+  </body>
+</html>

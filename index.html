@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>摄影作品集 | Portfolio</title>
+    <title>在光里 | 摄影札记</title>
     <style>
       :root {
         color-scheme: light;
         --ink: #111113;
-        --muted: #68686f;
-        --line: #e7e7ea;
-        --soft: #f6f6f7;
+        --muted: #6f6f76;
+        --line: #e9e9ed;
+        --soft: #f7f7f8;
         --white: #ffffff;
-        --accent: #0071e3;
-        --shadow: 0 24px 80px rgba(0, 0, 0, 0.08);
+        --accent: #1d1d1f;
+        --shadow: 0 26px 80px rgba(0, 0, 0, 0.08);
       }
 
       * {
@@ -43,13 +43,18 @@
         text-decoration: none;
       }
 
+      button,
+      input {
+        font: inherit;
+      }
+
       .nav {
         position: fixed;
         top: 0;
         z-index: 20;
         width: 100%;
-        border-bottom: 1px solid rgba(231, 231, 234, 0.78);
-        background: rgba(255, 255, 255, 0.82);
+        border-bottom: 1px solid rgba(233, 233, 237, 0.82);
+        background: rgba(255, 255, 255, 0.84);
         backdrop-filter: blur(18px);
       }
 
@@ -64,8 +69,7 @@
 
       .brand {
         font-size: 15px;
-        font-weight: 650;
-        letter-spacing: 0;
+        font-weight: 680;
       }
 
       .nav-links {
@@ -76,14 +80,16 @@
       }
 
       .hero {
-        min-height: 96vh;
-        padding: 92px 20px 40px;
+        min-height: 100vh;
+        padding: 92px 20px 34px;
         display: grid;
-        place-items: center;
+        align-items: center;
       }
 
-      .hero-shell {
+      .hero-shell,
+      .section-inner {
         width: min(1180px, 100%);
+        margin: 0 auto;
       }
 
       .hero-copy {
@@ -94,32 +100,42 @@
 
       .eyebrow {
         color: var(--muted);
-        font-size: 15px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 650;
       }
 
-      h1 {
-        margin: 13px 0 16px;
-        font-size: clamp(46px, 8vw, 92px);
-        line-height: 0.95;
+      h1,
+      h2 {
         letter-spacing: 0;
       }
 
+      h1 {
+        margin: 12px 0 16px;
+        font-size: clamp(48px, 8vw, 96px);
+        line-height: 0.96;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(34px, 5vw, 60px);
+        line-height: 1;
+      }
+
       .lead {
-        max-width: 690px;
+        max-width: 620px;
         margin: 0 auto;
         color: #55555c;
-        font-size: clamp(18px, 2.2vw, 24px);
-        line-height: 1.45;
+        font-size: clamp(18px, 2vw, 23px);
+        line-height: 1.56;
       }
 
       .hero-image {
         overflow: hidden;
-        width: min(1040px, 100%);
+        width: min(1060px, 100%);
         margin: 0 auto;
         border-radius: 8px;
         box-shadow: var(--shadow);
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 16 / 10;
         background: var(--soft);
       }
 
@@ -130,12 +146,7 @@
       }
 
       section {
-        padding: 92px 20px;
-      }
-
-      .section-inner {
-        width: min(1180px, 100%);
-        margin: 0 auto;
+        padding: 96px 20px;
       }
 
       .section-heading {
@@ -143,50 +154,49 @@
         align-items: end;
         justify-content: space-between;
         gap: 24px;
-        margin-bottom: 30px;
-      }
-
-      h2 {
-        margin: 0;
-        font-size: clamp(34px, 5vw, 58px);
-        line-height: 1;
-        letter-spacing: 0;
+        margin-bottom: 32px;
       }
 
       .section-note {
-        max-width: 390px;
+        max-width: 380px;
         margin: 0;
         color: var(--muted);
         font-size: 16px;
-        line-height: 1.55;
+        line-height: 1.7;
       }
 
       .filters {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        margin-bottom: 26px;
+        margin-bottom: 28px;
       }
 
-      .filter-button {
+      .filter-button,
+      .ghost-button,
+      .upload-label {
+        min-height: 36px;
         border: 1px solid var(--line);
         border-radius: 999px;
         background: var(--white);
         color: #2d2d31;
         cursor: pointer;
-        font: inherit;
         font-size: 14px;
-        min-height: 36px;
         padding: 0 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .filter-button.is-active {
-        border-color: var(--ink);
-        background: var(--ink);
+      .filter-button.is-active,
+      .upload-label {
+        border-color: var(--accent);
+        background: var(--accent);
         color: var(--white);
       }
 
-      .gallery {
+      .gallery,
+      .upload-grid {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
         gap: 16px;
@@ -201,7 +211,6 @@
         background: var(--soft);
         aspect-ratio: 4 / 5;
         cursor: pointer;
-        font: inherit;
         padding: 0;
         text-align: left;
       }
@@ -211,11 +220,15 @@
         aspect-ratio: 16 / 9;
       }
 
+      .photo-card.square {
+        aspect-ratio: 1 / 1;
+      }
+
       .photo-card img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 600ms ease;
+        transition: transform 650ms ease;
       }
 
       .photo-card:hover img,
@@ -228,10 +241,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        display: flex;
-        justify-content: space-between;
-        gap: 18px;
-        padding: 48px 18px 18px;
+        padding: 52px 18px 18px;
         color: var(--white);
         background: linear-gradient(to top, rgba(0, 0, 0, 0.58), transparent);
         opacity: 0;
@@ -244,7 +254,7 @@
       }
 
       .photo-title {
-        font-weight: 650;
+        font-weight: 680;
       }
 
       .photo-place {
@@ -252,71 +262,268 @@
         font-size: 13px;
       }
 
+      .upload-section {
+        border-top: 1px solid var(--line);
+        background: linear-gradient(#fff, #fafafa);
+      }
+
+      .upload-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.88);
+        padding: 22px;
+      }
+
+      .dropzone {
+        display: grid;
+        place-items: center;
+        min-height: 170px;
+        border: 1px dashed #c9c9cf;
+        border-radius: 8px;
+        background: var(--soft);
+        text-align: center;
+        transition:
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .dropzone.is-dragging {
+        border-color: var(--accent);
+        background: #eeeeef;
+      }
+
+      .upload-copy {
+        max-width: 520px;
+        padding: 24px;
+      }
+
+      .upload-copy p {
+        margin: 12px 0 18px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .upload-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .upload-grid {
+        margin-top: 18px;
+      }
+
+      .uploaded-card {
+        grid-column: span 4;
+      }
+
+      .uploaded-card:nth-child(5n + 1) {
+        grid-column: span 5;
+      }
+
+      .uploaded-card:nth-child(5n + 2) {
+        grid-column: span 7;
+        aspect-ratio: 16 / 10;
+      }
+
+      .delete-photo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.62);
+        border-radius: 50%;
+        background: rgba(17, 17, 19, 0.52);
+        color: var(--white);
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      .empty-state {
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        text-align: center;
+      }
+
       .story {
         background: var(--soft);
       }
 
-      .series {
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 44px;
-        align-items: center;
+      .names {
+        background: var(--white);
       }
 
-      .series-image {
+      .names-card {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 48px;
+        align-items: center;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 54px 0;
+      }
+
+      .names-pair {
+        display: grid;
+        gap: 18px;
+      }
+
+      .name-line {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 24px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 18px;
+      }
+
+      .name-line:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .name-line span {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .name-line strong {
+        font-size: clamp(28px, 4vw, 46px);
+        letter-spacing: 0;
+      }
+
+      .names-text p {
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(18px, 2vw, 22px);
+        line-height: 1.85;
+      }
+
+      .timeline {
+        background: var(--soft);
+      }
+
+      .timeline-list {
+        display: grid;
+        gap: 18px;
+      }
+
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 170px 1fr 260px;
+        gap: 28px;
+        align-items: center;
+        border-top: 1px solid #dedee3;
+        padding: 24px 0;
+      }
+
+      .timeline-item:last-child {
+        border-bottom: 1px solid #dedee3;
+      }
+
+      .timeline-time {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .timeline-text h3 {
+        margin: 0 0 10px;
+        font-size: clamp(24px, 3vw, 36px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .timeline-text p {
+        max-width: 520px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      .timeline-photo {
         overflow: hidden;
         border-radius: 8px;
         aspect-ratio: 4 / 3;
-        box-shadow: var(--shadow);
+        background: var(--white);
       }
 
-      .series-image img {
+      .timeline-photo img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
 
-      .series-copy p,
-      .about p {
-        color: var(--muted);
-        font-size: 18px;
-        line-height: 1.7;
-      }
-
-      .stat-row {
+      .diptych {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-        margin-top: 28px;
+        grid-template-columns: 1fr 0.82fr;
+        gap: 16px;
+        align-items: stretch;
       }
 
-      .stat {
-        border-top: 1px solid #d9d9dd;
-        padding-top: 14px;
+      .diptych img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: var(--shadow);
       }
 
-      .stat strong {
-        display: block;
-        font-size: 28px;
+      .diptych .large {
+        aspect-ratio: 4 / 3;
       }
 
-      .stat span {
+      .diptych .small {
+        aspect-ratio: 3 / 4;
+      }
+
+      .poem {
+        max-width: 720px;
+        margin: 44px auto 0;
+        text-align: center;
+      }
+
+      .poem h2 {
+        margin-bottom: 20px;
+      }
+
+      .poem p,
+      .quiet-copy p,
+      .contact p {
         color: var(--muted);
-        font-size: 13px;
+        line-height: 1.8;
       }
 
-      .about-grid {
+      .poem p {
+        margin: 0 auto;
+        font-size: clamp(18px, 2vw, 22px);
+      }
+
+      .quiet-grid {
         display: grid;
-        grid-template-columns: 0.8fr 1.2fr;
+        grid-template-columns: 0.76fr 1.24fr;
         gap: 46px;
-        align-items: start;
+        align-items: center;
       }
 
       .portrait {
         overflow: hidden;
         border-radius: 8px;
-        aspect-ratio: 1 / 1.15;
+        aspect-ratio: 1 / 1.22;
         background: var(--soft);
+        box-shadow: var(--shadow);
       }
 
       .portrait img {
@@ -325,29 +532,35 @@
         object-fit: cover;
       }
 
+      .quiet-copy p {
+        font-size: 18px;
+      }
+
+      .keepsakes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 30px;
+      }
+
+      .keepsakes img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        aspect-ratio: 1 / 1.24;
+        object-fit: cover;
+        background: var(--soft);
+      }
+
       .contact {
-        text-align: center;
         border-top: 1px solid var(--line);
+        text-align: center;
       }
 
       .contact p {
-        max-width: 620px;
-        margin: 18px auto 28px;
-        color: var(--muted);
+        max-width: 600px;
+        margin: 18px auto 0;
         font-size: 18px;
-        line-height: 1.65;
-      }
-
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 44px;
-        border-radius: 999px;
-        background: var(--accent);
-        color: var(--white);
-        font-weight: 650;
-        padding: 0 22px;
       }
 
       footer {
@@ -418,26 +631,33 @@
         }
 
         .section-heading,
-        .series,
-        .about-grid {
+        .names-card,
+        .timeline-item,
+        .quiet-grid {
           display: block;
         }
 
-        .section-note {
-          margin-top: 14px;
+        .section-note,
+        .names-text,
+        .timeline-text,
+        .timeline-photo,
+        .quiet-copy {
+          margin-top: 24px;
         }
 
-        .series-copy,
-        .about {
-          margin-top: 28px;
-        }
-
-        .gallery {
+        .gallery,
+        .diptych,
+        .keepsakes,
+        .upload-grid {
           grid-template-columns: 1fr;
         }
 
         .photo-card,
-        .photo-card.wide {
+        .photo-card.wide,
+        .photo-card.square,
+        .uploaded-card,
+        .uploaded-card:nth-child(5n + 1),
+        .uploaded-card:nth-child(5n + 2) {
           grid-column: auto;
           aspect-ratio: 4 / 5;
         }
@@ -448,20 +668,22 @@
           width: min(100% - 28px, 1180px);
         }
 
-        .nav-links a:nth-child(2) {
+        .nav-links a:nth-child(2),
+        .nav-links a:nth-child(4),
+        .nav-links a:nth-child(6) {
           display: none;
         }
 
         section {
-          padding: 70px 16px;
+          padding: 72px 16px;
         }
 
         .hero {
           padding-inline: 16px;
         }
 
-        .stat-row {
-          grid-template-columns: 1fr;
+        .hero-image {
+          aspect-ratio: 4 / 5;
         }
 
         .photo-meta {
@@ -473,12 +695,15 @@
   <body>
     <nav class="nav" aria-label="主导航">
       <div class="nav-inner">
-        <a class="brand" href="#">Your Name</a>
+        <a class="brand" href="#">在光里</a>
         <div class="nav-links">
-          <a href="#gallery">作品</a>
-          <a href="#series">系列</a>
-          <a href="#about">关于</a>
-          <a href="#contact">联系</a>
+          <a href="#gallery">片段</a>
+          <a href="#upload">添加</a>
+          <a href="#story">靠近</a>
+          <a href="#names">署名</a>
+          <a href="#timeline">时间</a>
+          <a href="#quiet">留白</a>
+          <a href="#contact">以后</a>
         </div>
       </div>
     </nav>
@@ -486,17 +711,14 @@
     <header class="hero">
       <div class="hero-shell">
         <div class="hero-copy">
-          <div class="eyebrow">Photography Portfolio</div>
-          <h1>看见安静的光。</h1>
+          <div class="eyebrow">a quiet album</div>
+          <h1>在光里。</h1>
           <p class="lead">
-            一个以白色为主调的个人摄影作品集，用克制的版面、宽松的留白和大图展示，让照片自己说话。
+            风经过树梢，影子落在裙摆。那些没有说出口的喜欢，被一张张照片轻轻收好。
           </p>
         </div>
         <div class="hero-image">
-          <img
-            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1800&q=90"
-            alt="山谷湖面与柔和自然光"
-          />
+          <img src="assets/photo-01.jpg" alt="园林石窗外的侧影" />
         </div>
       </div>
     </header>
@@ -505,105 +727,202 @@
       <section id="gallery">
         <div class="section-inner">
           <div class="section-heading">
-            <h2>精选作品</h2>
+            <h2>一些片段</h2>
             <p class="section-note">
-              用类别筛选作品，点击任意照片可以进入更沉浸的查看模式。
+              不急着抵达，只把当时的光、风和安静留下。
             </p>
           </div>
 
-          <div class="filters" aria-label="作品分类">
+          <div class="filters" aria-label="照片分类">
             <button class="filter-button is-active" data-filter="all">全部</button>
-            <button class="filter-button" data-filter="landscape">风景</button>
-            <button class="filter-button" data-filter="city">城市</button>
-            <button class="filter-button" data-filter="portrait">人像</button>
+            <button class="filter-button" data-filter="light">光</button>
+            <button class="filter-button" data-filter="shade">影</button>
+            <button class="filter-button" data-filter="near">靠近</button>
           </div>
 
           <div class="gallery">
-            <button class="photo-card wide" data-category="landscape" data-title="Morning Valley" aria-label="查看 Morning Valley">
-              <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=88" alt="晨光里的湖边小屋" />
-              <span class="photo-meta"><span><span class="photo-title">Morning Valley</span><br /><span class="photo-place">Yunnan, 2026</span></span></span>
+            <button class="photo-card wide" data-category="shade" data-title="隔着一扇窗" aria-label="查看 隔着一扇窗">
+              <img src="assets/photo-01.jpg" alt="隔着石窗看见的侧影" />
+              <span class="photo-meta"><span class="photo-title">隔着一扇窗</span><br /><span class="photo-place">quiet frame</span></span>
             </button>
-            <button class="photo-card" data-category="city" data-title="Glass Hour" aria-label="查看 Glass Hour">
-              <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=88" alt="白色建筑与清晰天光" />
-              <span class="photo-meta"><span><span class="photo-title">Glass Hour</span><br /><span class="photo-place">Shanghai, 2026</span></span></span>
+            <button class="photo-card" data-category="light" data-title="树下" aria-label="查看 树下">
+              <img src="assets/photo-04.jpg" alt="树下的黑裙人像" />
+              <span class="photo-meta"><span class="photo-title">树下</span><br /><span class="photo-place">soft daylight</span></span>
             </button>
-            <button class="photo-card" data-category="portrait" data-title="Quiet Frame" aria-label="查看 Quiet Frame">
-              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=88" alt="自然光下的人像" />
-              <span class="photo-meta"><span><span class="photo-title">Quiet Frame</span><br /><span class="photo-place">Studio, 2025</span></span></span>
+            <button class="photo-card" data-category="light" data-title="侧光" aria-label="查看 侧光">
+              <img src="assets/photo-05.jpg" alt="侧光中的侧身人像" />
+              <span class="photo-meta"><span class="photo-title">侧光</span><br /><span class="photo-place">a small wind</span></span>
             </button>
-            <button class="photo-card" data-category="landscape" data-title="Blue Ridge" aria-label="查看 Blue Ridge">
-              <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=88" alt="远山与公路" />
-              <span class="photo-meta"><span><span class="photo-title">Blue Ridge</span><br /><span class="photo-place">Qinghai, 2025</span></span></span>
+            <button class="photo-card" data-category="shade" data-title="廊下" aria-label="查看 廊下">
+              <img src="assets/photo-07.jpg" alt="红色廊柱旁的侧影" />
+              <span class="photo-meta"><span class="photo-title">廊下</span><br /><span class="photo-place">held breath</span></span>
             </button>
-            <button class="photo-card wide" data-category="city" data-title="White Corner" aria-label="查看 White Corner">
-              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=88" alt="城市建筑立面" />
-              <span class="photo-meta"><span><span class="photo-title">White Corner</span><br /><span class="photo-place">Tokyo, 2025</span></span></span>
+            <button class="photo-card" data-category="light" data-title="水边" aria-label="查看 水边">
+              <img src="assets/photo-02.jpg" alt="水边坐着的横幅照片" />
+              <span class="photo-meta"><span class="photo-title">水边</span><br /><span class="photo-place">light falls</span></span>
             </button>
-            <button class="photo-card" data-category="portrait" data-title="Soft Noon" aria-label="查看 Soft Noon">
-              <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&q=88" alt="柔和日光下的人像" />
-              <span class="photo-meta"><span><span class="photo-title">Soft Noon</span><br /><span class="photo-place">Hangzhou, 2024</span></span></span>
+            <button class="photo-card" data-category="shade" data-title="柳影" aria-label="查看 柳影">
+              <img src="assets/photo-08.jpg" alt="柳树下的黑裙人像" />
+              <span class="photo-meta"><span class="photo-title">柳影</span><br /><span class="photo-place">slow afternoon</span></span>
+            </button>
+            <button class="photo-card" data-category="light" data-title="抬手" aria-label="查看 抬手">
+              <img src="assets/photo-06.jpg" alt="用浅色外套遮阳的人像" />
+              <span class="photo-meta"><span class="photo-title">抬手</span><br /><span class="photo-place">summer hush</span></span>
+            </button>
+            <button class="photo-card" data-category="near" data-title="暗处有光" aria-label="查看 暗处有光">
+              <img src="assets/photo-14.jpg" alt="暗光里的合影" />
+              <span class="photo-meta"><span class="photo-title">暗处有光</span><br /><span class="photo-place">near</span></span>
+            </button>
+            <button class="photo-card square" data-category="near" data-title="小小留存" aria-label="查看 小小留存">
+              <img src="assets/photo-13.jpg" alt="桌面上的拍立得照片" />
+              <span class="photo-meta"><span class="photo-title">小小留存</span><br /><span class="photo-place">keepsake</span></span>
             </button>
           </div>
         </div>
       </section>
 
-      <section class="story" id="series">
-        <div class="section-inner series">
-          <div class="series-image">
-            <img
-              src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1400&q=88"
-              alt="星空与雪山"
-            />
-          </div>
-          <div class="series-copy">
-            <div class="eyebrow">Featured Series</div>
-            <h2>慢下来，才看得见。</h2>
-            <p>
-              这个系列关注旅途中很轻的瞬间：风掠过水面、建筑边缘的一束光、人物回头前的一秒。页面以干净的白色空间承接照片，让浏览节奏更接近翻阅一本摄影集。
+      <section class="upload-section" id="upload">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2>继续添加</h2>
+            <p class="section-note">
+              选择照片，页面会自动排成整齐的相册。添加的照片会留在当前浏览器里。
             </p>
-            <div class="stat-row">
-              <div class="stat"><strong>36</strong><span>张精选作品</span></div>
-              <div class="stat"><strong>8</strong><span>个拍摄城市</span></div>
-              <div class="stat"><strong>4</strong><span>个主题系列</span></div>
+          </div>
+          <div class="upload-panel">
+            <div class="dropzone" id="dropzone">
+              <div class="upload-copy">
+                <div class="eyebrow">new moments</div>
+                <p>把新的照片放进来。横图、竖图都会被温柔地裁进同一套网格里。</p>
+                <div class="upload-actions">
+                  <label class="upload-label" for="photo-input">选择照片</label>
+                  <button class="ghost-button" id="clear-uploads" type="button">清空新增</button>
+                </div>
+                <input class="file-input" id="photo-input" type="file" accept="image/*" multiple />
+              </div>
+            </div>
+            <p class="empty-state" id="empty-state">还没有新增照片。</p>
+            <div class="upload-grid" id="upload-grid" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story" id="story">
+        <div class="section-inner">
+          <div class="diptych">
+            <img class="large" src="assets/photo-03.jpg" alt="水边的安静瞬间" />
+            <img class="small" src="assets/photo-12.jpg" alt="低头微笑的近景" />
+          </div>
+          <div class="poem">
+            <div class="eyebrow">near, softly</div>
+            <h2>靠近一点，世界就慢下来。</h2>
+            <p>
+              有些照片不用解释。它们只是证明：某一天的风很轻，某个人刚好在光里，而按下快门的人舍不得眨眼。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="names" id="names">
+        <div class="section-inner">
+          <div class="names-card">
+            <div class="names-pair">
+              <div class="name-line">
+                <span>behind the lens</span>
+                <strong>逯昕鹏</strong>
+              </div>
+              <div class="name-line">
+                <span>the only muse</span>
+                <strong>徐畅</strong>
+              </div>
+            </div>
+            <div class="names-text">
+              <p>
+                镜头只向一束光反复练习。她走得很慢，风也慢；于是成长有了形状，藏在每一次对焦、每一次回看，和每一张仍想继续拍下去的照片里。
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="about">
-        <div class="section-inner about-grid">
-          <div class="portrait">
-            <img
-              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=88"
-              alt="摄影师肖像占位图"
-            />
+      <section class="timeline" id="timeline">
+        <div class="section-inner">
+          <div class="section-heading">
+            <h2>慢慢长出光。</h2>
+            <p class="section-note">
+              不用写成故事。时间自己会把每一次靠近，排成一条安静的线。
+            </p>
           </div>
-          <div class="about">
-            <div class="eyebrow">About</div>
-            <h2>你好，我是 Your Name。</h2>
+
+          <div class="timeline-list">
+            <article class="timeline-item">
+              <div class="timeline-time">first light</div>
+              <div class="timeline-text">
+                <h3>从一张照片开始。</h3>
+                <p>起初只是试着对焦。后来才发现，镜头愿意停留的地方，也在慢慢教会我如何观看。</p>
+              </div>
+              <div class="timeline-photo">
+                <img src="assets/photo-13.jpg" alt="桌面上的拍立得照片" />
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-time">soft season</div>
+              <div class="timeline-text">
+                <h3>树影替沉默作证。</h3>
+                <p>光落下来，风也刚好经过。那些不必说出口的心绪，都被藏进裙摆和叶影之间。</p>
+              </div>
+              <div class="timeline-photo">
+                <img src="assets/photo-04.jpg" alt="树下的黑裙人像" />
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-time">still growing</div>
+              <div class="timeline-text">
+                <h3>以后也慢慢拍。</h3>
+                <p>一个人在光里，一个人在镜头后。照片越来越多，成长也就有了可以回看的形状。</p>
+              </div>
+              <div class="timeline-photo">
+                <img src="assets/photo-15.jpg" alt="桌面上的拍立得合影" />
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="quiet">
+        <div class="section-inner quiet-grid">
+          <div class="portrait">
+            <img src="assets/photo-11.jpg" alt="窗边光影中的近景人像" />
+          </div>
+          <div class="quiet-copy">
+            <div class="eyebrow">white space</div>
+            <h2>把热烈藏进留白。</h2>
             <p>
-              我喜欢用摄影记录清爽、安静、有呼吸感的画面。你可以在这里放自己的创作理念、常用器材、拍摄方向，或者写一段更个人化的介绍。
+              页面不需要说太多。白色负责安静，照片负责心动，剩下的交给每一次回看。
             </p>
-            <p>
-              这个页面已经预留了作品筛选、图片查看、系列介绍和联系入口。把图片链接替换成你的照片，再改一下文字，就能成为你的个人摄影主页。
-            </p>
+            <div class="keepsakes">
+              <img src="assets/photo-15.jpg" alt="桌面上的拍立得合影" />
+              <img src="assets/photo-09.jpg" alt="桥边低头的瞬间" />
+              <img src="assets/photo-10.jpg" alt="廊柱旁的黑裙人像" />
+            </div>
           </div>
         </div>
       </section>
 
       <section class="contact" id="contact">
         <div class="section-inner">
-          <div class="eyebrow">Contact</div>
-          <h2>一起拍点什么。</h2>
+          <div class="eyebrow">to be continued</div>
+          <h2>以后也慢慢拍。</h2>
           <p>
-            商业拍摄、个人约拍、展览合作或作品交流，都可以从这里开始。
+            新的光会来，新的照片也会来。这个页面只负责把它们安静地放好。
           </p>
-          <a class="cta" href="mailto:hello@example.com">hello@example.com</a>
         </div>
       </section>
     </main>
 
-    <footer>© 2026 Your Name. All photography rights reserved.</footer>
+    <footer>© 2026. A quiet album, still growing.</footer>
 
     <div class="lightbox" aria-hidden="true">
       <button class="close" type="button" aria-label="关闭图片预览">×</button>
@@ -620,6 +939,13 @@
       const lightboxImage = lightbox.querySelector("img");
       const lightboxCaption = lightbox.querySelector("figcaption");
       const closeButton = document.querySelector(".close");
+      const photoInput = document.querySelector("#photo-input");
+      const uploadGrid = document.querySelector("#upload-grid");
+      const dropzone = document.querySelector("#dropzone");
+      const emptyState = document.querySelector("#empty-state");
+      const clearUploads = document.querySelector("#clear-uploads");
+      const uploadStorageKey = "quiet-album-uploads";
+      let uploadedPhotos = loadUploads();
 
       filterButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -638,18 +964,144 @@
       photoCards.forEach((card) => {
         card.addEventListener("click", () => {
           const image = card.querySelector("img");
-          lightboxImage.src = image.src.replace(/w=\d+/, "w=1800");
-          lightboxImage.alt = image.alt;
-          lightboxCaption.textContent = card.dataset.title;
-          lightbox.classList.add("is-open");
-          lightbox.setAttribute("aria-hidden", "false");
+          openLightbox(image.src, image.alt, card.dataset.title);
         });
       });
+
+      photoInput.addEventListener("change", (event) => {
+        addFiles(event.target.files);
+        photoInput.value = "";
+      });
+
+      ["dragenter", "dragover"].forEach((eventName) => {
+        dropzone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          dropzone.classList.add("is-dragging");
+        });
+      });
+
+      ["dragleave", "drop"].forEach((eventName) => {
+        dropzone.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          dropzone.classList.remove("is-dragging");
+        });
+      });
+
+      dropzone.addEventListener("drop", (event) => {
+        addFiles(event.dataTransfer.files);
+      });
+
+      clearUploads.addEventListener("click", () => {
+        uploadedPhotos = [];
+        saveUploads();
+        renderUploads();
+      });
+
+      function openLightbox(src, alt, caption) {
+        lightboxImage.src = src;
+        lightboxImage.alt = alt;
+        lightboxCaption.textContent = caption;
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+      }
 
       function closeLightbox() {
         lightbox.classList.remove("is-open");
         lightbox.setAttribute("aria-hidden", "true");
         lightboxImage.removeAttribute("src");
+      }
+
+      function loadUploads() {
+        try {
+          return JSON.parse(localStorage.getItem(uploadStorageKey)) || [];
+        } catch {
+          return [];
+        }
+      }
+
+      function saveUploads() {
+        localStorage.setItem(uploadStorageKey, JSON.stringify(uploadedPhotos));
+      }
+
+      async function addFiles(fileList) {
+        const files = Array.from(fileList).filter((file) => file.type.startsWith("image/"));
+        if (!files.length) return;
+
+        const compressed = await Promise.all(files.map((file) => compressImage(file)));
+        uploadedPhotos = [...compressed, ...uploadedPhotos].slice(0, 24);
+        saveUploads();
+        renderUploads();
+      }
+
+      function compressImage(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const image = new Image();
+            image.onload = () => {
+              const maxSide = 1600;
+              const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+              const width = Math.round(image.width * scale);
+              const height = Math.round(image.height * scale);
+              const canvas = document.createElement("canvas");
+              const context = canvas.getContext("2d");
+
+              canvas.width = width;
+              canvas.height = height;
+              context.drawImage(image, 0, 0, width, height);
+
+              resolve({
+                id: crypto.randomUUID(),
+                title: file.name.replace(/\.[^.]+$/, ""),
+                src: canvas.toDataURL("image/jpeg", 0.86),
+              });
+            };
+            image.onerror = reject;
+            image.src = reader.result;
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function renderUploads() {
+        uploadGrid.innerHTML = "";
+        emptyState.style.display = uploadedPhotos.length ? "none" : "block";
+
+        uploadedPhotos.forEach((photo, index) => {
+          const card = document.createElement("button");
+          card.className = "photo-card uploaded-card";
+          card.type = "button";
+          card.setAttribute("aria-label", `查看新增照片 ${index + 1}`);
+
+          const image = document.createElement("img");
+          image.src = photo.src;
+          image.alt = photo.title || "新增照片";
+
+          const meta = document.createElement("span");
+          meta.className = "photo-meta";
+          meta.innerHTML = `<span class="photo-title">新来的光</span><br /><span class="photo-place">added moment</span>`;
+
+          const deleteButton = document.createElement("button");
+          deleteButton.className = "delete-photo";
+          deleteButton.type = "button";
+          deleteButton.setAttribute("aria-label", "删除这张照片");
+          deleteButton.textContent = "×";
+
+          deleteButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            uploadedPhotos = uploadedPhotos.filter((item) => item.id !== photo.id);
+            saveUploads();
+            renderUploads();
+          });
+
+          card.addEventListener("click", () => {
+            openLightbox(photo.src, image.alt, "新来的光");
+          });
+
+          card.append(image, meta, deleteButton);
+          uploadGrid.append(card);
+        });
       }
 
       closeButton.addEventListener("click", closeLightbox);
@@ -659,6 +1111,8 @@
       window.addEventListener("keydown", (event) => {
         if (event.key === "Escape") closeLightbox();
       });
+
+      renderUploads();
     </script>
   </body>
 </html>
